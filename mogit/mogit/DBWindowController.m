@@ -8,6 +8,7 @@
 
 #import "DBWindowController.h"
 #import "DBConfig.h"
+#import "DBGit.h"
 
 @interface DBWindowController ()
 
@@ -35,7 +36,8 @@
 - (IBAction)onClick:(id)sender
 {
     NSLog(@"onClick...");
-    NSLog(@"config=%@", [DBConfig sharedInstance]._dict);
+    DBConfig * config = [DBConfig sharedInstance];
+    [DBGit initWorkDir:config.workDir];
 }
 
 @end

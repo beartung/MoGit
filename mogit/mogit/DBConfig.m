@@ -17,6 +17,10 @@ static DBConfig * __instance;
 
 @implementation DBConfig
 
+- (void)sync{
+    [[self _dict] writeToFile:kDBPlistName atomically:YES];
+}
+
 + (DBConfig *)sharedInstance {
     
     if (__instance == nil) {
@@ -26,7 +30,7 @@ static DBConfig * __instance;
             __instance._dict = @{kWORKDIR:kDefaultWorkDir, kPROJECTS:@[]};
             [__instance._dict writeToFile:kDBPlistName atomically:YES];
         }
-        NSLog(@"%@\n", __instance._dict);
+        __instance.workDir = [__instance._dict objectForKey:kWORKDIR];
     }
     return __instance;
 }

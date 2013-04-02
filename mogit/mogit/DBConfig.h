@@ -10,10 +10,11 @@
 
 @interface DBConfig : NSObject
 
-@property (nonatomic, assign) NSDictionary * _dict;
+@property (nonatomic, strong) NSDictionary * _dict;
 @property (nonatomic, assign) NSString * workDir;
 @property (nonatomic, assign) NSArray * projectGits;
 
+- (void)sync;
 + (DBConfig *)sharedInstance;
 
 @end

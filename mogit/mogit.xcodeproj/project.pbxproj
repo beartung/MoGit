@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0995D4F2170ABCBA004B2A70 /* DBGit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0995D4F1170ABCBA004B2A70 /* DBGit.m */; };
 		09C107AD170A7945009632B5 /* DBWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C107AC170A7945009632B5 /* DBWindowController.m */; };
 		09C107B1170A8EC4009632B5 /* DBConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C107B0170A8EC4009632B5 /* DBConfig.m */; };
 		09EF22D8170A679C00503DA1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09EF22D7170A679C00503DA1 /* Cocoa.framework */; };
@@ -18,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0995D4EE170ABC56004B2A70 /* ShellTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShellTask.h; sourceTree = "<group>"; };
+		0995D4EF170ABC57004B2A70 /* ShellTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShellTask.m; sourceTree = "<group>"; };
+		0995D4F0170ABCBA004B2A70 /* DBGit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBGit.h; sourceTree = "<group>"; };
+		0995D4F1170ABCBA004B2A70 /* DBGit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBGit.m; sourceTree = "<group>"; };
 		09C107AB170A7945009632B5 /* DBWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBWindowController.h; sourceTree = "<group>"; };
 		09C107AC170A7945009632B5 /* DBWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBWindowController.m; sourceTree = "<group>"; };
 		09C107AF170A8EC4009632B5 /* DBConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBConfig.h; sourceTree = "<group>"; };
@@ -88,6 +93,8 @@
 		09EF22DD170A679C00503DA1 /* mogit */ = {
 			isa = PBXGroup;
 			children = (
+				0995D4EE170ABC56004B2A70 /* ShellTask.h */,
+				0995D4EF170ABC57004B2A70 /* ShellTask.m */,
 				09EF22E9170A679D00503DA1 /* DBAppDelegate.h */,
 				09EF22EA170A679D00503DA1 /* DBAppDelegate.m */,
 				09C107AB170A7945009632B5 /* DBWindowController.h */,
@@ -96,6 +103,8 @@
 				09EF22DE170A679D00503DA1 /* Supporting Files */,
 				09C107AF170A8EC4009632B5 /* DBConfig.h */,
 				09C107B0170A8EC4009632B5 /* DBConfig.m */,
+				0995D4F0170ABCBA004B2A70 /* DBGit.h */,
+				0995D4F1170ABCBA004B2A70 /* DBGit.m */,
 			);
 			path = mogit;
 			sourceTree = "<group>";
@@ -181,6 +190,7 @@
 				09EF22EB170A679D00503DA1 /* DBAppDelegate.m in Sources */,
 				09C107AD170A7945009632B5 /* DBWindowController.m in Sources */,
 				09C107B1170A8EC4009632B5 /* DBConfig.m in Sources */,
+				0995D4F2170ABCBA004B2A70 /* DBGit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
