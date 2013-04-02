@@ -18,6 +18,10 @@ static DBConfig * __instance;
 @implementation DBConfig
 
 - (void)sync{
+    NSLog(@"sync config workdir=%@", [self workDir]);
+    NSArray * projects = [self projectGits];
+    NSLog(@"sync config projects=%@", projects);
+    [[self _dict] setValue:projects forKey:kPROJECTS];
     [[self _dict] writeToFile:kDBPlistName atomically:YES];
 }
 
@@ -31,6 +35,7 @@ static DBConfig * __instance;
             [__instance._dict writeToFile:kDBPlistName atomically:YES];
         }
         __instance.workDir = [__instance._dict objectForKey:kWORKDIR];
+        __instance.projectGits = [[NSMutableArray alloc] initWithArray:[__instance._dict objectForKey:kPROJECTS]];
     }
     return __instance;
 }

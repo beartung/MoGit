@@ -1323,7 +1323,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="706222042">
 								<int key="NSCellFlags">-1804599231</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">~/Destop/Mogit/</string>
+								<string key="NSContents">~/Desktop/Mogit/</string>
 								<object class="NSFont" key="NSSupport" id="599239537">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -1540,7 +1540,7 @@
 											<string key="NSFrameSize">{602, 203}</string>
 											<reference key="NSSuperview" ref="335318720"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="221920601"/>
+											<reference key="NSNextKeyView" ref="819448430"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<object class="NSTextContainer" key="NSTextContainer" id="49985781">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -1794,7 +1794,7 @@ wGw</bytes>
 							<string key="NSFrame">{{20, 51}, {604, 205}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="819448430"/>
+							<reference key="NSNextKeyView" ref="335318720"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133138</int>
 							<reference key="NSVScroller" ref="221920601"/>

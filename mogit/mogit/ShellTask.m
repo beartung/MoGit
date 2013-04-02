@@ -19,7 +19,7 @@
 //Sending the task a - launch message will tell sh to run it.
 + (NSTask*) taskForShellCommand:(NSString*)command
 {
-	NSTask *task = [[[NSTask alloc] init] autorelease]; 
+	NSTask *task = [[NSTask alloc] init]; 
     [task setLaunchPath: @"/bin/sh"]; //we are launching sh, it is wha will process command for us
 	[task setStandardInput:[NSFileHandle fileHandleWithNullDevice]]; //stdin is directed to /dev/null
 	
@@ -51,7 +51,7 @@
 	
     [task launch];
 
-	return [[[NSString alloc] initWithData:[outputFileHandle readDataToEndOfFile] encoding: NSUTF8StringEncoding] autorelease];
+	return [[NSString alloc] initWithData:[outputFileHandle readDataToEndOfFile] encoding: NSUTF8StringEncoding];
 }
 
 + (oneway void) executeShellCommandAsynchronously:(NSString*)command

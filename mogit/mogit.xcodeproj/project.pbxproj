@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0936CF5E170AC2D30043C83A /* ShellTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0995D4EF170ABC57004B2A70 /* ShellTask.m */; };
 		0995D4F2170ABCBA004B2A70 /* DBGit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0995D4F1170ABCBA004B2A70 /* DBGit.m */; };
 		09C107AD170A7945009632B5 /* DBWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C107AC170A7945009632B5 /* DBWindowController.m */; };
 		09C107B1170A8EC4009632B5 /* DBConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C107B0170A8EC4009632B5 /* DBConfig.m */; };
@@ -186,6 +187,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0936CF5E170AC2D30043C83A /* ShellTask.m in Sources */,
 				09EF22E4170A679D00503DA1 /* main.m in Sources */,
 				09EF22EB170A679D00503DA1 /* DBAppDelegate.m in Sources */,
 				09C107AD170A7945009632B5 /* DBWindowController.m in Sources */,

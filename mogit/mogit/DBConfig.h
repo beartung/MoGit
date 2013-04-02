@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSDictionary * _dict;
 @property (nonatomic, assign) NSString * workDir;
-@property (nonatomic, assign) NSArray * projectGits;
+@property (nonatomic, strong) NSMutableArray * projectGits;
 
 - (void)sync;
 + (DBConfig *)sharedInstance;

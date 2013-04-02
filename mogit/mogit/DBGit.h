@@ -10,6 +10,7 @@
 
 @interface DBGit : NSObject
 
-+ (void)initWorkDir:(NSString *)dir;
++ (NSString *)initWorkDir:(NSString *)dir;
++ (NSString *)initProject:(NSString *)git;
 
 @end
