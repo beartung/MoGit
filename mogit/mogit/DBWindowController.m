@@ -20,23 +20,37 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        // Initialization code here.
     }
     
     return self;
 }
 
-- (void)windowDidLoad
+- (void)awakeFromNib
 {
-    [super windowDidLoad];
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    [super awakeFromNib];
+    NSLog(@"awakeFromNib...");
+    [self.syncButton setHidden:YES];
+    DBConfig * config = [DBConfig sharedInstance];
+    NSLog(@"window load workdir=%@", config.workDir);
+    if (config.workDir != nil && [config.workDir length] > 0){
+        [self.workdir setTitle:config.workDir];        
+    }
+    if (config.projectGits != nil && config.nowProject != nil && [config.nowProject length] > 0){
+        [self.project setTitle:config.nowProject];
+        [self.workdir setEnabled:NO];
+        [self.project setEnabled:NO];
+        [self.button setEnabled:NO];
+        [self.syncButton setHidden:NO];
+        self.check.state = NSOffState;
+        self.log.string = [DBGit statusProject:config.nowProject];
+    }
+    [self.log setEditable:NO];
+    NSLog(@"window load now project=%@", config.nowProject);
+    NSLog(@"window load projects=%@", config.nowProject);
 }
 
-
-- (IBAction)onClick:(id)sender
-{
-    NSLog(@"onClick...");
-    NSString * inputDir = [[self workdir] stringValue];
+- (void)initSetting{
+    NSString * inputDir = self.workdir.stringValue;
     NSLog(@"work dir=%@", inputDir);
     DBConfig * config = [DBConfig sharedInstance];
     config.workDir = inputDir;
@@ -45,14 +59,43 @@
     
     NSLog(@"projects=%@", config.projectGits);
     
-    NSString * inputProject = [[self project] stringValue];
+    NSString * inputProject = self.project.stringValue;
     NSLog(@"new project=%@", inputProject);
     if ([inputProject length] > 0 && [inputProject hasPrefix:@"http://"] && [inputProject hasSuffix:@".git"]){
         if ([config.projectGits indexOfObject:inputProject] == NSNotFound ){
             [config.projectGits addObject:inputProject];
+            config.nowProject = inputProject;
             [config sync];
-            [DBGit initProject:inputProject];
+            [self.workdir setEnabled:NO];
+            [self.project setEnabled:NO];
+            [self.button setEnabled:NO];
+            
+            [self addLog:[DBGit initProject:inputProject]];
         }
+        [self addLog:[DBGit statusProject:inputProject]];
+        [self.syncButton setHidden:NO];
+    }
+}
+
+- (void)addLog:(NSString *)msg{
+    self.log.string = [[NSString alloc] initWithFormat:@"%@\n%@", self.log.string, msg];
+}
+
+- (IBAction)onClick:(id)sender
+{
+    NSLog(@"onClick...");
+    if (sender == self.button){
+        NSLog(@"onClick... setting");
+        [self initSetting];
+    }else if (sender == self.syncButton){
+        NSLog(@"onClick... sync");
+    }else if (sender == self.check){
+        NSLog(@"onClick... check");
+        BOOL s = self.check.state == NSOnState;
+        [self.workdir setEnabled:s];
+        [self.project setEnabled:s];
+        [self.button setEnabled:s];
+        [self.syncButton setHidden:s];
     }
     
 }

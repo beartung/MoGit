@@ -13,7 +13,7 @@
 @implementation DBGit
 
 + (NSString *)initWorkDir:(NSString *)dir{
-    NSString * cmd = [[NSString alloc] initWithFormat:@"mkdir -p %@/git", dir];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"mkdir -p %@", dir];
     NSLog(@"initWorkDir cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"initWorkDir ret=%@", ret);
@@ -24,10 +24,33 @@
 
 + (NSString *)initProject:(NSString *)git{
     
-    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/git; git clone %@", [DBConfig sharedInstance].workDir, git];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@; git clone %@", [DBConfig sharedInstance].workDir, git];
     NSLog(@"initProject cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
-    NSLog(@"initProjectDir ret=%@", ret);
+    NSLog(@"initProject ret=%@", ret);
+    return ret;
+}
+
++ (NSString *)getProjectName:(NSString *)git{
+    return [[git lastPathComponent] stringByDeletingPathExtension];
+}
+
++ (NSString *)statusProject:(NSString *)git{
+    NSString * name = [DBGit getProjectName:git];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git status", [DBConfig sharedInstance].workDir, name];
+    NSLog(@"statusProject cmd=%@", cmd);
+    NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
+    NSLog(@"statusProject ret=%@", ret);
+    return ret;
+}
+
++ (NSString *)syncProject:(NSString *)git withComment:(NSString*)comment{
+    NSString * name = [DBGit getProjectName:git];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git ci -a -m %@; git pull; git push",
+                      [DBConfig sharedInstance].workDir, name, comment];
+    NSLog(@"syncProject cmd=%@", cmd);
+    NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
+    NSLog(@"syncProject ret=%@", ret);
     return ret;
 }
 

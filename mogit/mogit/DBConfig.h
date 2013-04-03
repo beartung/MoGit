@@ -10,8 +10,8 @@
 
 @interface DBConfig : NSObject
 
-@property (nonatomic, strong) NSDictionary * _dict;
-@property (nonatomic, assign) NSString * workDir;
+@property (nonatomic, strong) NSString * workDir;
+@property (nonatomic, strong) NSString * nowProject;
 @property (nonatomic, strong) NSMutableArray * projectGits;
 
 - (void)sync;
