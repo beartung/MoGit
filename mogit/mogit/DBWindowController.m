@@ -75,9 +75,8 @@
         config.nowProject = inputProject;   
         if ([config.projectGits indexOfObject:inputProject] == NSNotFound ){
             [config.projectGits addObject:inputProject];         
-            [self addLog:[DBGit initProject:inputProject]];
         }
-        [self addLog:[DBGit statusProject:inputProject]];
+        [self addLog:[DBGit initProject:inputProject]];
         [self.workdir setEnabled:NO];
         [self.project setEnabled:NO];
         [self.button setEnabled:NO];
@@ -98,9 +97,9 @@
         [self.progress startAnimation:nil];
         NSString * status = [DBGit statusProject:config.nowProject];
         [self addLog:status];
-        NSRange range = [status rangeOfString:@"当前项目没有任何改动"];
-        [self.syncButton setHidden:range.length > 0];
-        [self.commentInput setHidden:range.length > 0];
+        NSRange range = [status rangeOfString:@"当前项目本地改动"];
+        [self.syncButton setHidden:range.length == 0];
+        [self.commentInput setHidden:range.length == 0];
         [self.progress stopAnimation:nil];
     }
 }
