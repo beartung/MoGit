@@ -20,6 +20,7 @@
 @property IBOutlet NSProgressIndicator * progress;
 @property IBOutlet NSTextFieldCell * comment;
 @property IBOutlet NSTextField * commentInput;
+@property IBOutlet NSProgressIndicator * progressSync;
 
 - (IBAction)onClick:(id)sender;
 

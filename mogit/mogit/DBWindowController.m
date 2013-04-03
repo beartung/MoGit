@@ -46,14 +46,16 @@
         [self.project setEnabled:NO];
         [self.button setEnabled:NO];
         self.check.state = NSOffState;
-        [self doCheckStatus];
     }
-
+    
+    NSLog(@"check git %d", [DBGit checkGit]);
+    NSLog(@"check git config %d", [DBGit checkGitConfig]);
     NSLog(@"window load now project=%@", config.nowProject);
     NSLog(@"window load projects=%@", config.nowProject);
     self._timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self
                         selector:@selector(checkStatus:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self._timer forMode:@"test"];
+    [self._timer fire];
     
 }
 
@@ -64,17 +66,15 @@
     DBConfig * config = [DBConfig sharedInstance];
     config.workDir = inputDir;
     [DBGit initWorkDir:config.workDir];
-    [config sync];
     
     NSLog(@"projects=%@", config.projectGits);
     
     NSString * inputProject = self.project.stringValue;
     NSLog(@"new project=%@", inputProject);
     if ([inputProject length] > 0 && [inputProject hasPrefix:@"http://"] && [inputProject hasSuffix:@".git"]){
+        config.nowProject = inputProject;   
         if ([config.projectGits indexOfObject:inputProject] == NSNotFound ){
-            [config.projectGits addObject:inputProject];
-            config.nowProject = inputProject;
-            [config sync];
+            [config.projectGits addObject:inputProject];         
             [self addLog:[DBGit initProject:inputProject]];
         }
         [self addLog:[DBGit statusProject:inputProject]];
@@ -83,6 +83,7 @@
         [self.button setEnabled:NO];
         self.check.state = NSOffState;
     }
+    [config sync];
     [self.progressSetting stopAnimation:nil];
 }
 
@@ -93,7 +94,7 @@
 
 - (void)doCheckStatus{
     DBConfig * config = [DBConfig sharedInstance];
-    if ([config.nowProject length] > 0){
+    if ([config.nowProject length] > 0 && self.check.state == NSOffState){
         [self.progress startAnimation:nil];
         NSString * status = [DBGit statusProject:config.nowProject];
         [self addLog:status];
@@ -118,16 +119,16 @@
         [self initSetting];
     }else if (sender == self.syncButton){
         NSLog(@"onClick... sync");
-        [self.progress startAnimation:nil];
+        
         DBConfig * config = [DBConfig sharedInstance];
         NSLog(@"comment: %@", self.comment.stringValue);
         if ([self.comment.stringValue length] > 0){
-            [self.progress startAnimation:nil];
-            [self addLog:[DBGit syncProject:config.nowProject withComment:self.comment.stringValue]];
             [self.commentInput setHidden:YES];
+            [self.progressSync startAnimation:nil];
+            [self addLog:[DBGit syncProject:config.nowProject withComment:self.comment.stringValue]];
+            [self.progressSync stopAnimation:nil];            
             [self.syncButton setHidden:YES];
         }
-        [self.progress stopAnimation:nil];
     }else if (sender == self.check){
         NSLog(@"onClick... check");
         BOOL s = self.check.state == NSOnState;
@@ -135,6 +136,7 @@
         [self.project setEnabled:s];
         [self.button setEnabled:s];
         [self.syncButton setHidden:s];
+        [self.commentInput setHidden:s];
     }
     
 }

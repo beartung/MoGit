@@ -41,8 +41,8 @@ static DBConfig * __instance;
         __instance.projectGits = [[NSMutableArray alloc] initWithArray:[_dict objectForKey:kPROJECTS]];
         __instance.nowProject = [_dict objectForKey:kNOW_PROJECT];
     }
-    NSLog(@"get config workdir=%@", __instance.workDir);
-    NSLog(@"get config projects=%@", __instance.projectGits);
+    //NSLog(@"get config workdir=%@", __instance.workDir);
+    //NSLog(@"get config projects=%@", __instance.projectGits);
     NSLog(@"get config now project=%@", __instance.nowProject);
 
     return __instance;

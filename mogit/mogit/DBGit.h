@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+//https://code.google.com/p/git-osx-installer/downloads/detail?name=git-1.8.2-intel-universal-snow-leopard.dmg
 
 @interface DBGit : NSObject
 
++ (BOOL)checkGit;
++ (BOOL)checkGitConfig;
 + (NSString *)initWorkDir:(NSString *)dir;
 + (NSString *)initProject:(NSString *)git;
 + (NSString *)statusProject:(NSString *)git;

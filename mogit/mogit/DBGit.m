@@ -12,6 +12,24 @@
 
 @implementation DBGit
 
++ (BOOL)checkGit{
+    NSString * cmd = @"which git";
+    NSLog(@"checkGit cmd=%@", cmd);
+    NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
+    NSLog(@"checkGit ret=%@", ret);
+    NSRange range = [ret rangeOfString:@"git"];
+    return range.length > 0;
+}
+
++ (BOOL)checkGitConfig{
+    NSString * cmd = @"grep \"code.dapps.douban.com\" ~/.netrc";
+    NSLog(@"checkGit cmd=%@", cmd);
+    NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
+    //NSLog(@"checkGit ret=%@", ret);
+    NSRange range = [ret rangeOfString:@"code.dapps.douban.com"];
+    return range.length > 0;
+}
+
 + (NSString *)initWorkDir:(NSString *)dir{
     NSString * cmd = [[NSString alloc] initWithFormat:@"date; mkdir -p %@", dir];
     NSLog(@"initWorkDir cmd=%@", cmd);
