@@ -45,6 +45,8 @@
         self.log.string = [DBGit statusProject:config.nowProject];
     }
     [self.log setEditable:NO];
+    [self.comment setTitle:@""];
+    [self.commentInput setHidden:YES];
     NSLog(@"window load now project=%@", config.nowProject);
     NSLog(@"window load projects=%@", config.nowProject);
 }
@@ -93,16 +95,22 @@
         [self.progress startAnimation:nil];
         DBConfig * config = [DBConfig sharedInstance];
         NSString * status = [DBGit statusProject:config.nowProject];
+        [self addLog:status];
         NSRange range = [status rangeOfString:@"nothing to commit"];
         if (range.length > 0){
             NSLog(@"nothing to commit, do pull");
             [self addLog:[DBGit syncProject:config.nowProject]];
-            [self addLog:[DBGit statusProject:config.nowProject]];
         }else{
-        
+            NSLog(@"comment: %@", self.comment.stringValue);
+            [self.commentInput setHidden:NO];
+            if ([self.comment.stringValue length] > 0){
+                [self.progress startAnimation:nil];
+                [self addLog:[DBGit syncProject:config.nowProject withComment:self.comment.stringValue]];
+                [self.commentInput setHidden:YES];
+            }
         }
+        [self addLog:[DBGit statusProject:config.nowProject]];
         [self.progress stopAnimation:nil];
-
     }else if (sender == self.check){
         NSLog(@"onClick... check");
         BOOL s = self.check.state == NSOnState;

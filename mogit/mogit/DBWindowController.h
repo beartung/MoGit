@@ -17,6 +17,8 @@
 @property IBOutlet NSButton * syncButton;
 @property IBOutlet NSTextView * log;
 @property IBOutlet NSProgressIndicator * progress;
+@property IBOutlet NSTextFieldCell * comment;
+@property IBOutlet NSTextField * commentInput;
 
 - (IBAction)onClick:(id)sender;
 

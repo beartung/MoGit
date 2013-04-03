@@ -56,7 +56,7 @@
 
 + (NSString *)syncProject:(NSString *)git withComment:(NSString*)comment{
     NSString * name = [DBGit getProjectName:git];
-    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; date; git ci -a -m %@; git pull; git push",
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; date; git add -A; git commit -m \"%@\"; git pull; git push",
                       [DBConfig sharedInstance].workDir, name, comment];
     NSLog(@"syncProject cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
