@@ -79,6 +79,7 @@
     if ([changes length] > 0){
         changes = [changes stringByReplacingOccurrencesOfString:@"#	modified:   " withString:@"修改了:\t"];
         changes = [changes stringByReplacingOccurrencesOfString:@"#	deleted:    " withString:@"删除了:\t"];
+        changes = [changes stringByReplacingOccurrencesOfString:@"#	both modified:    " withString:@"有冲突:\t"];        
     }
     
     return [[NSString alloc] initWithFormat:@"\n当前项目本地改动:\n\n%@\n%@\n", changes, newFiles];
