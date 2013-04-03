@@ -79,6 +79,7 @@
 
 - (void)addLog:(NSString *)msg{
     self.log.string = [[NSString alloc] initWithFormat:@"%@\n%@", self.log.string, msg];
+    [self.log scrollToEndOfDocument:nil];
 }
 
 - (IBAction)onClick:(id)sender
@@ -89,6 +90,19 @@
         [self initSetting];
     }else if (sender == self.syncButton){
         NSLog(@"onClick... sync");
+        [self.progress startAnimation:nil];
+        DBConfig * config = [DBConfig sharedInstance];
+        NSString * status = [DBGit statusProject:config.nowProject];
+        NSRange range = [status rangeOfString:@"nothing to commit"];
+        if (range.length > 0){
+            NSLog(@"nothing to commit, do pull");
+            [self addLog:[DBGit syncProject:config.nowProject]];
+            [self addLog:[DBGit statusProject:config.nowProject]];
+        }else{
+        
+        }
+        [self.progress stopAnimation:nil];
+
     }else if (sender == self.check){
         NSLog(@"onClick... check");
         BOOL s = self.check.state == NSOnState;

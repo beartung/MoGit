@@ -16,6 +16,7 @@
 @property IBOutlet NSButton * check;
 @property IBOutlet NSButton * syncButton;
 @property IBOutlet NSTextView * log;
+@property IBOutlet NSProgressIndicator * progress;
 
 - (IBAction)onClick:(id)sender;
 

@@ -14,5 +14,6 @@
 + (NSString *)initProject:(NSString *)git;
 + (NSString *)statusProject:(NSString *)git;
 + (NSString *)getProjectName:(NSString *)git;
++ (NSString *)syncProject:(NSString *)git;
 + (NSString *)syncProject:(NSString *)git withComment:(NSString*)comment;
 @end
