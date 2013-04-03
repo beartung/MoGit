@@ -8,9 +8,9 @@
 
 #import "DBConfig.h"
 
-static NSString * const kDBPlistName = @"plist";
+static NSString * const kDBPlistName = @"mogit.plist";
 static NSString * const kWORKDIR = @"WORK_DIR";
-static NSString * const kDefaultWorkDir = @"~/Desktop/Mogit/";
+static NSString * const kDefaultWorkDir = @"~/Desktop/Mogit";
 static NSString * const kPROJECTS = @"PROJECT_GITS";
 static NSString * const kNOW_PROJECT = @"NOW_PROJECT";
 
@@ -28,7 +28,7 @@ static DBConfig * __instance;
 }
 
 + (DBConfig *)sharedInstance {
-    
+    NSLog(@"get config from %@", kDBPlistName);
     if (__instance == nil) {
         __instance = [[super allocWithZone:NULL] init];
         NSDictionary * _dict = [NSDictionary dictionaryWithContentsOfFile:kDBPlistName];

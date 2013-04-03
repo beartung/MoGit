@@ -42,7 +42,7 @@
         [self.button setEnabled:NO];
         [self.syncButton setHidden:NO];
         self.check.state = NSOffState;
-        self.log.string = [DBGit statusProject:config.nowProject];
+        [self addLog:[DBGit statusProject:config.nowProject]];
     }
     [self.log setEditable:NO];
     [self.comment setTitle:@""];
@@ -52,6 +52,7 @@
 }
 
 - (void)initSetting{
+    [self.progressSetting startAnimation:nil];
     NSString * inputDir = self.workdir.stringValue;
     NSLog(@"work dir=%@", inputDir);
     DBConfig * config = [DBConfig sharedInstance];
@@ -68,15 +69,16 @@
             [config.projectGits addObject:inputProject];
             config.nowProject = inputProject;
             [config sync];
-            [self.workdir setEnabled:NO];
-            [self.project setEnabled:NO];
-            [self.button setEnabled:NO];
-            
             [self addLog:[DBGit initProject:inputProject]];
         }
         [self addLog:[DBGit statusProject:inputProject]];
         [self.syncButton setHidden:NO];
+        [self.workdir setEnabled:NO];
+        [self.project setEnabled:NO];
+        [self.button setEnabled:NO];
+        self.check.state = NSOffState;
     }
+    [self.progressSetting stopAnimation:nil];
 }
 
 - (void)addLog:(NSString *)msg{

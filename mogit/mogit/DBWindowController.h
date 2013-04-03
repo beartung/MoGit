@@ -14,6 +14,7 @@
 @property IBOutlet NSTextFieldCell * project;
 @property IBOutlet NSButton * button;
 @property IBOutlet NSButton * check;
+@property IBOutlet NSProgressIndicator * progressSetting;
 @property IBOutlet NSButton * syncButton;
 @property IBOutlet NSTextView * log;
 @property IBOutlet NSProgressIndicator * progress;
