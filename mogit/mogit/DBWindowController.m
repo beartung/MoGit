@@ -12,6 +12,8 @@
 
 @interface DBWindowController ()
 
+@property (nonatomic, strong) NSTimer * _timer;
+
 @end
 
 @implementation DBWindowController
@@ -29,6 +31,9 @@
 {
     [super awakeFromNib];
     NSLog(@"awakeFromNib...");
+    [self.log setEditable:NO];
+    [self.comment setTitle:@""];
+    [self.commentInput setHidden:YES];
     [self.syncButton setHidden:YES];
     DBConfig * config = [DBConfig sharedInstance];
     NSLog(@"window load workdir=%@", config.workDir);
@@ -40,15 +45,16 @@
         [self.workdir setEnabled:NO];
         [self.project setEnabled:NO];
         [self.button setEnabled:NO];
-        [self.syncButton setHidden:NO];
         self.check.state = NSOffState;
-        [self addLog:[DBGit statusProject:config.nowProject]];
+        [self doCheckStatus];
     }
-    [self.log setEditable:NO];
-    [self.comment setTitle:@""];
-    [self.commentInput setHidden:YES];
+
     NSLog(@"window load now project=%@", config.nowProject);
     NSLog(@"window load projects=%@", config.nowProject);
+    self._timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self
+                        selector:@selector(checkStatus:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self._timer forMode:@"test"];
+    
 }
 
 - (void)initSetting{
@@ -72,7 +78,6 @@
             [self addLog:[DBGit initProject:inputProject]];
         }
         [self addLog:[DBGit statusProject:inputProject]];
-        [self.syncButton setHidden:NO];
         [self.workdir setEnabled:NO];
         [self.project setEnabled:NO];
         [self.button setEnabled:NO];
@@ -81,8 +86,27 @@
     [self.progressSetting stopAnimation:nil];
 }
 
+- (void)checkStatus:(id)sender{
+    NSLog(@"checkStatus");
+    [self doCheckStatus];
+}
+
+- (void)doCheckStatus{
+    DBConfig * config = [DBConfig sharedInstance];
+    if ([config.nowProject length] > 0){
+        [self.progress startAnimation:nil];
+        NSString * status = [DBGit statusProject:config.nowProject];
+        [self addLog:status];
+        NSRange range = [status rangeOfString:@"当前项目没有任何改动"];
+        [self.syncButton setHidden:range.length > 0];
+        [self.commentInput setHidden:range.length > 0];
+        [self.progress stopAnimation:nil];
+    }
+}
+
 - (void)addLog:(NSString *)msg{
-    self.log.string = [[NSString alloc] initWithFormat:@"%@\n%@", self.log.string, msg];
+    //self.log.string = [[NSString alloc] initWithFormat:@"%@\n%@", self.log.string, msg];
+    self.log.string = msg;
     [self.log scrollToEndOfDocument:nil];
 }
 
@@ -96,22 +120,13 @@
         NSLog(@"onClick... sync");
         [self.progress startAnimation:nil];
         DBConfig * config = [DBConfig sharedInstance];
-        NSString * status = [DBGit statusProject:config.nowProject];
-        [self addLog:status];
-        NSRange range = [status rangeOfString:@"nothing to commit"];
-        if (range.length > 0){
-            NSLog(@"nothing to commit, do pull");
-            [self addLog:[DBGit syncProject:config.nowProject]];
-        }else{
-            NSLog(@"comment: %@", self.comment.stringValue);
-            [self.commentInput setHidden:NO];
-            if ([self.comment.stringValue length] > 0){
-                [self.progress startAnimation:nil];
-                [self addLog:[DBGit syncProject:config.nowProject withComment:self.comment.stringValue]];
-                [self.commentInput setHidden:YES];
-            }
+        NSLog(@"comment: %@", self.comment.stringValue);
+        if ([self.comment.stringValue length] > 0){
+            [self.progress startAnimation:nil];
+            [self addLog:[DBGit syncProject:config.nowProject withComment:self.comment.stringValue]];
+            [self.commentInput setHidden:YES];
+            [self.syncButton setHidden:YES];
         }
-        [self addLog:[DBGit statusProject:config.nowProject]];
         [self.progress stopAnimation:nil];
     }else if (sender == self.check){
         NSLog(@"onClick... check");

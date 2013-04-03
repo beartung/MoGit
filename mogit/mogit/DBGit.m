@@ -18,7 +18,7 @@
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"initWorkDir ret=%@", ret);
     
-    return [[NSString alloc] initWithFormat:@"新建工作目录:%@\n", dir];
+    return [[NSString alloc] initWithFormat:@"\n新建工作目录:%@\n", dir];
 }
 
 
@@ -28,7 +28,7 @@
     NSLog(@"initProject cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"initProject ret=%@", ret);
-    return [[NSString alloc] initWithFormat:@"同步%@项目到本地目录：%@/%@\n", name, [DBConfig sharedInstance].workDir, name];
+    return [[NSString alloc] initWithFormat:@"\n同步%@项目到本地目录：%@/%@\n", name, [DBConfig sharedInstance].workDir, name];
 }
 
 + (NSString *)getProjectName:(NSString *)git{
@@ -44,7 +44,7 @@
     
     NSRange range = [ret rangeOfString:@"nothing to commit"];
     if (range.length > 0){
-        return @"当前项目没有任何改动";
+        return @"\n当前项目没有任何改动";
     }
     
     range = [ret rangeOfString:@"Untracked files"];
@@ -63,7 +63,7 @@
         changes = [changes stringByReplacingOccurrencesOfString:@"#	deleted:    " withString:@"删除了:\t"];
     }
     
-    return [[NSString alloc] initWithFormat:@"当前项目本地改动:\n\n%@\n%@\n", changes, newFiles];
+    return [[NSString alloc] initWithFormat:@"\n当前项目本地改动:\n\n%@\n%@\n", changes, newFiles];
 }
 
 + (NSString *)syncProject:(NSString *)git{
@@ -77,7 +77,7 @@
     NSLog(@"syncProject ret=%@", ret);
     NSRange range = [ret rangeOfString:@"100.0% packet loss"];
     if (range.length > 0){
-        return @"请检查当前网络并确保连接上VPN!!!\n";
+        return @"\n请检查当前网络并确保连接上VPN!!!\n";
     }
     
     cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; date; git pull",
@@ -85,7 +85,7 @@
     NSLog(@"syncProject cmd=%@", cmd);
     ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"syncProject ret=%@", ret);
-    return [[NSString alloc] initWithFormat:@"同步%@项目最新修改到本地\n", name];
+    return [[NSString alloc] initWithFormat:@"\n同步%@项目最新修改到本地\n", name];
 }
 
 + (NSString *)syncProject:(NSString *)git withComment:(NSString*)comment{
@@ -97,9 +97,9 @@
     NSLog(@"syncProject ret=%@", ret);
     NSRange range = [ret rangeOfString:@"fatal: could not read Username"];
     if (range.length > 0){
-        return @"请联系和你合作的工程师，把你加为当前项目的commiter!!!\n";
+        return @"\n请联系和你合作的工程师，把你加为当前项目的commiter!!!\n";
     }
-    return @"已经成功提交到远端 ：）\n";
+    return @"\n已经成功提交到远端 ：）\n";
 }
 
 @end
