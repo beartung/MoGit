@@ -14,14 +14,18 @@ static NSString * const kDefaultWorkDir = @"~/Desktop/Mogit";
 static NSString * const kPROJECTS = @"PROJECT_GITS";
 static NSString * const kNOW_PROJECT = @"NOW_PROJECT";
 
+@interface DBConfig ()
+
+@end
+
 static DBConfig * __instance;
 
 @implementation DBConfig
 
 - (void)sync{
-    NSLog(@"sync config workdir=%@", self.workDir);
-    NSLog(@"sync config projects=%@", self.projectGits);
-    NSLog(@"sync config now project=%@", self.nowProject);
+    //NSLog(@"sync config workdir=%@", self.workDir);
+    //NSLog(@"sync config projects=%@", self.projectGits);
+    //NSLog(@"sync config now project=%@", self.nowProject);
     NSDictionary * _dict = @{kWORKDIR:self.workDir, kNOW_PROJECT:self.nowProject, kPROJECTS:self.projectGits};
     NSLog(@"sync config=%@", _dict);
     [_dict writeToFile:kDBPlistName atomically:YES];

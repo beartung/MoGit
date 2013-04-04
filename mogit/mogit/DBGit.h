@@ -11,12 +11,16 @@
 
 @interface DBGit : NSObject
 
+@property (nonatomic, strong) NSString * git;
+
+- (NSString *)clone;
+- (NSString *)status;
+- (NSString *)pull;
+- (NSString *)sync:(NSString*)comment;
+
 + (BOOL)checkGit;
 + (BOOL)checkGitConfig;
++ (BOOL)checkNetwork;
 + (NSString *)initWorkDir:(NSString *)dir;
-+ (NSString *)initProject:(NSString *)git;
-+ (NSString *)statusProject:(NSString *)git;
-+ (NSString *)getProjectName:(NSString *)git;
-+ (NSString *)syncProject:(NSString *)git;
-+ (NSString *)syncProject:(NSString *)git withComment:(NSString*)comment;
++ (DBGit *)sharedInstance;
 @end
