@@ -39,7 +39,7 @@
 }
 
 - (void)initTimer{
-    self._timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self
+    self._timer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self
                                                  selector:@selector(checkStatus:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self._timer forMode:@"test"];
     [self._timer fire];
@@ -66,16 +66,27 @@
     if (![DBGit checkGit]){
         [self setProjectUI:NO];
         [self.check setEnabled:NO];
-        [self addLog:@"请先安装GIT，也可以联系合作的工程师！"];
+        [self addLog:@"请先安装GIT，也可以联系合作的工程师!!"];
     }else{
-        NSLog(@"check git config %d", [DBGit checkGitConfig]);
-        if (![DBGit checkGitConfig]){
-            [self addLog:@"请先配置好GIT帐号，也可以联系合作的工程师！"];
+        BOOL configed = [DBGit checkGitConfig];
+        NSLog(@"check git config %d", configed);
+        [self setAccountUI:configed];
+        if (!configed){
+            [self addLog:@"请先配置好GIT帐号，也可以联系合作的工程师!!"];
         }else{
             [self initTimer];
         }
     }
     
+}
+
+- (void)setAccountUI:(BOOL)hide{
+    [self.accountButton setHidden:hide];
+    [self.accountInput setHidden:hide];
+    [self.passwordInput setHidden:hide];
+    [self.check setHidden:!hide];
+    [self.button setHidden:!hide];
+    [self.projectInput setHidden:!hide];
 }
 
 - (void)setNowProject{
@@ -95,6 +106,8 @@
         dg.git = config.nowProject;
         [self addLog:[dg clone]];
         [self setProjectUI:NO];
+    }else{
+        [self addLog:@"请输入合法的项目地址"];
     }
     [self.progress stopAnimation:nil];
 }
@@ -144,8 +157,20 @@
         NSLog(@"onClick... check");
         [self setProjectUI:self.check.state == NSOnState];
         [self doCheckStatus];
+    }else if (sender == self.accountButton){
+        NSLog(@"onClick... account");
+        NSString * inputName = self.account.stringValue;
+        NSString * inputPassword = self.password.stringValue;
+        if (inputName != nil && inputName.length > 0 && inputPassword != nil &&
+            inputPassword.length > 0){
+            [[DBGit sharedInstance] config:inputName withPassword:inputPassword];
+            [self setAccountUI:YES];
+            [self addLog:@"GIT帐号已经设置成功"];
+            [self initTimer];
+        }else{
+            [self addLog:@"请输入你的豆瓣LDAP帐号和密码"];
+        }
     }
-    
 }
 
 @end

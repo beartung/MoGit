@@ -22,17 +22,22 @@ static NSString * const kERROR_STATUS_NO_REPO_CN = @"本地项目目录不存在
 static NSString * const kERROR_STATUS_NOCHANGE = @"nothing to commit";
 static NSString * const kERROR_STATUS_NOCHANGE_CN = @"当前项目没有任何改动";
 static NSString * const kERROR_STATUS_NEED_MERGE = @"both modified";
-static NSString * const kERROR_STATUS_NEED_MERGE_CN = @"发生冲突，请联系和你合作的工程师帮助解决";
-static NSString * const kSTATUS_CHANGED = @"当前项目本地改动:\n\n%@\n%@\n";
+static NSString * const kERROR_STATUS_NEED_MERGE_CN = @"发生冲突，请联系和你合作的工程师帮助解决!!";
+static NSString * const kSTATUS_CHANGED = @"当前项目本地改动:\n%@\n%@\n%@\n";
+static NSString * const kSTATUS_HAS_COMMITS = @"# Your branch is ahead of 'origin/master' by";
+static NSString * const kSTATUS_HAS_COMMITS_CN = @"当前已经提交到本地的有";
+static NSString * const kSTATUS_COMMITS = @"commit";
+static NSString * const kSTATUS_COMMITS_CN = @"个改动\n请联系和你合作的工程师，检查GIT帐号配置!!\n并且把你加为当前项目的commiter!!";
 static NSString * const kSTATUS_NEW = @"#	";
 static NSString * const kSTATUS_NEW_CN = @"新加了:\t";
 static NSString * const kSTATUS_MODIFY = @"#	modified:   ";
 static NSString * const kSTATUS_MODIFY_CN = @"修改了:\t";
+static NSString * const kNEED_PUSH = @"Your branch is ahead of";
 static NSString * const kSTATUS_DELETE = @"#	deleted:    ";
 static NSString * const kSTATUS_DELETE_CN = @"删除了:\t";
 static NSString * const kPULL_SUCCESS = @"同步%@项目最新修改到本地";
 static NSString * const kERROR_NOT_COMMITER = @"fatal: could not read Username";
-static NSString * const kERROR_NOT_COMMITER_CN = @"请联系和你合作的工程师，把你加为当前项目的commiter!";
+static NSString * const kERROR_NOT_COMMITER_CN = @"提交失败，请联系和你合作的工程师，检查GIT帐号配置!!\n并且把你加为当前项目的commiter!!";
 static NSString * const kERROR_FAIL_MERGE = @"Failed to merge";
 static NSString * const kERROR_FAIL_MERGE_CN = @"你的修改提交到远端时发生冲突，请联系和你合作的工程师帮助解决";
 static NSString * const kPUSH_SUCCESS = @"已经成功将你的修改提交到远端 ：）";
@@ -69,6 +74,13 @@ static DBGit * __instance;
     return __instance;
 }
 
+- (void)config:(NSString *)name withPassword:(NSString *)password{
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cp ~/.netrc ~/.netrc.bak; echo \"machine %@ login %@ password %@\" >> ~/.netrc", kHOST, name, password];
+    NSLog(@"checkGitConfig cmd=%@", cmd);
+    NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
+    NSLog(@"checkGitConfig ret=%@", ret);
+}
+
 - (NSString *)clone{
     NSString * workdir = [DBConfig sharedInstance].workDir;
     NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@; git clone %@", workdir, self.git];
@@ -83,14 +95,37 @@ static DBGit * __instance;
 
 - (NSString *)status{
     NSString * name = [self name];
-    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git status|grep -v \"no changes added to commit\"|grep -v \"nothing added to commit\";", [DBConfig sharedInstance].workDir, name];
+    NSString * commits = @"";
+    NSString * cmd;
+    NSString * ret;
+    NSRange range;
+    
+    cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git status|grep \"Your branch is ahead of\"", [DBConfig sharedInstance].workDir, name];
     NSLog(@"statusProject cmd=%@", cmd);
-    NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
+    ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"statusProject ret=%@", ret);
+    
+    if (ret.length > 0){
+        commits = [ret stringByReplacingOccurrencesOfString:kSTATUS_HAS_COMMITS
+                                                 withString:kSTATUS_HAS_COMMITS_CN];
+        commits = [commits stringByReplacingOccurrencesOfString:kSTATUS_COMMITS
+                                                 withString:kSTATUS_COMMITS_CN];
+        commits = [commits stringByReplacingOccurrencesOfString:@"s"
+                                                     withString:@""];
+        commits = [commits stringByReplacingOccurrencesOfString:@"."
+                                                     withString:@""];
+    }
+    
+    cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git status|grep -v \"no changes added to commit\"|grep -v \"nothing added to commit\";", [DBConfig sharedInstance].workDir, name];
+    NSLog(@"statusProject cmd=%@", cmd);
+    ret = [ShellTask executeShellCommandSynchronously:cmd];
+    NSLog(@"statusProject ret=%@", ret);
+    
     NSString * error = [self checkError:ret withErrors:@[kERROR_STATUS_NOCHANGE, kERROR_STATUS_NEED_MERGE, kERROR_STATUS_NO_REPO]];
-    if (error != nil) return error;
-        
-    NSRange range = [ret rangeOfString:@"Untracked files"];
+    if (error != nil && [commits length] == 0) return error;
+    
+    
+    range = [ret rangeOfString:@"Untracked files"];
     NSString * newFiles = @"";
     if (range.length > 0){
         newFiles = [[ret substringFromIndex:range.location] substringFromIndex:86];
@@ -109,7 +144,7 @@ static DBGit * __instance;
                                                      withString:kSTATUS_DELETE_CN];
     }
 
-    return [[NSString alloc] initWithFormat:kSTATUS_CHANGED, changes, newFiles];
+    return [[NSString alloc] initWithFormat:kSTATUS_CHANGED, commits, changes, newFiles];
 }
 
 - (NSString *)pull{
@@ -145,7 +180,7 @@ static DBGit * __instance;
 }
 
 + (BOOL)checkGitConfig{
-    NSString * cmd = [[NSString alloc] initWithFormat:@"grep \"%@1\" ~/.netrc", kHOST];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"grep \"%@\" ~/.netrc", kHOST];
     NSLog(@"checkGitConfig cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"checkGitConfig ret=%@", ret);
@@ -153,7 +188,7 @@ static DBGit * __instance;
     return range.length > 0;
 }
 
-- (BOOL)checkNetwork{
++ (BOOL)checkNetwork{
     NSString * cmd = [[NSString alloc] initWithFormat:@"ping -c 1 %@", kHOST];
     NSLog(@"checkNetWork cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];

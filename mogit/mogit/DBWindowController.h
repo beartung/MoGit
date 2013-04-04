@@ -11,6 +11,7 @@
 @interface DBWindowController : NSWindowController
 
 @property IBOutlet NSTextFieldCell * project;
+@property IBOutlet NSTextField * projectInput;
 @property IBOutlet NSButton * button;
 @property IBOutlet NSButton * check;
 @property IBOutlet NSButton * syncButton;
@@ -19,6 +20,12 @@
 @property IBOutlet NSTextFieldCell * comment;
 @property IBOutlet NSTextField * commentInput;
 @property IBOutlet NSProgressIndicator * progressSync;
+
+@property IBOutlet NSTextField * accountInput;
+@property IBOutlet NSTextFieldCell * account;
+@property IBOutlet NSTextField * passwordInput;
+@property IBOutlet NSTextFieldCell * password;
+@property IBOutlet NSButton * accountButton;
 
 - (IBAction)onClick:(id)sender;
 

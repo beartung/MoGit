@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) NSString * git;
 
+- (void)config:(NSString *)name withPassword:(NSString *)password;
 - (NSString *)clone;
 - (NSString *)status;
 - (NSString *)pull;
