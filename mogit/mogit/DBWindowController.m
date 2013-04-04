@@ -63,8 +63,18 @@
     [self setSyncUI:YES];
     
     NSLog(@"check git %d", [DBGit checkGit]);
-    NSLog(@"check git config %d", [DBGit checkGitConfig]);
-    [self initTimer];
+    if (![DBGit checkGit]){
+        [self setProjectUI:NO];
+        [self.check setEnabled:NO];
+        [self addLog:@"请先安装GIT，也可以联系合作的工程师！"];
+    }else{
+        NSLog(@"check git config %d", [DBGit checkGitConfig]);
+        if (![DBGit checkGitConfig]){
+            [self addLog:@"请先配置好GIT帐号，也可以联系合作的工程师！"];
+        }else{
+            [self initTimer];
+        }
+    }
     
 }
 

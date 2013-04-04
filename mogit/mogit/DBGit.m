@@ -145,7 +145,7 @@ static DBGit * __instance;
 }
 
 + (BOOL)checkGitConfig{
-    NSString * cmd = [[NSString alloc] initWithFormat:@"grep \"%@\" ~/.netrc", kHOST];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"grep \"%@1\" ~/.netrc", kHOST];
     NSLog(@"checkGitConfig cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"checkGitConfig ret=%@", ret);
