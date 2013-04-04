@@ -13,6 +13,7 @@
 @interface DBWindowController ()
 
 @property (nonatomic, strong) NSTimer * _timer;
+@property BOOL _timerInited;
 
 @end
 
@@ -22,6 +23,9 @@
 {
     self = [super initWithWindow:window];
     if (self) {
+        self._timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self
+                                                     selector:@selector(checkStatus:) userInfo:nil repeats:YES];
+        self._timerInited = NO;
     }
     return self;
 }
@@ -38,11 +42,12 @@
     self.check.state = enable ? NSOnState : NSOffState;
 }
 
-- (void)initTimer{
-    self._timer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self
-                                                 selector:@selector(checkStatus:) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self._timer forMode:@"test"];
-    [self._timer fire];
+- (void)initTimer:(BOOL)fire{
+    if (!self._timerInited){
+        [[NSRunLoop currentRunLoop] addTimer:self._timer forMode:@"test"];
+        self._timerInited = YES;
+    }
+    if (fire && self._timerInited) [self._timer fire];
 }
 
 - (void)awakeFromNib
@@ -50,6 +55,8 @@
     [super awakeFromNib];
     
     NSLog(@"awakeFromNib...");
+    
+    
     DBConfig * config = [DBConfig sharedInstance];
     BOOL isNowProjectAvail = config.projectGits != nil &&
             config.nowProject != nil && [config.nowProject length] > 0;
@@ -74,7 +81,7 @@
         if (!configed){
             [self addLog:@"请先配置好GIT帐号，也可以联系合作的工程师!!"];
         }else{
-            [self initTimer];
+            [self initTimer:YES];
         }
     }
     
@@ -146,12 +153,23 @@
         NSLog(@"onClick... sync");
         NSLog(@"comment: %@", self.comment.stringValue);
         if ([self.comment.stringValue length] > 0){
-            [self.commentInput setHidden:YES];
             [self.progressSync startAnimation:nil];
-            [self addLog:[[DBGit sharedInstance] sync:self.comment.stringValue]];
-            [self.comment setTitle:@""];
-            [self.progressSync stopAnimation:nil];            
-            [self.syncButton setHidden:YES];
+            [self.commentInput setHidden:YES];
+            if ([DBGit checkNetwork]){
+                NSLog(@"vpn works try sync");
+                [self addLog:[[DBGit sharedInstance] sync:self.comment.stringValue]];
+                [self.comment setTitle:@""];                
+                [self.syncButton setHidden:YES];
+                [self initTimer:NO];
+            }else{
+                NSLog(@"vpn not works !!!");
+                [self.commentInput setHidden:NO];
+                [self.syncButton setHidden:NO];
+                [self._timer invalidate];
+                self._timerInited = NO;
+                [self addLog:@"请检查是否连接到网络和VPN!\n然后再次点击同步"];
+            }
+            [self.progressSync stopAnimation:nil];
         }
     }else if (sender == self.check){
         NSLog(@"onClick... check");
@@ -166,7 +184,7 @@
             [[DBGit sharedInstance] config:inputName withPassword:inputPassword];
             [self setAccountUI:YES];
             [self addLog:@"GIT帐号已经设置成功"];
-            [self initTimer];
+            [self initTimer:NO];
         }else{
             [self addLog:@"请输入你的豆瓣LDAP帐号和密码"];
         }

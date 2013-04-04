@@ -193,8 +193,9 @@ static DBGit * __instance;
     NSLog(@"checkNetWork cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"checkNetWork ret=%@", ret);
-    NSRange range = [ret rangeOfString:@"100.0% packet loss"];
-    return range.length == 0;
+    NSRange r1 = [ret rangeOfString:@"100.0% packet loss"];
+    NSRange r2 = [ret rangeOfString:@"cannot resolve"];
+    return r1.length == 0 && r2.length == 0;
 }
 
 + (NSString *)initWorkDir:(NSString *)dir{
