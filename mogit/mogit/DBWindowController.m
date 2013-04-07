@@ -23,10 +23,10 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        self._timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self
+        self._timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self
                                                      selector:@selector(checkStatus:) userInfo:nil repeats:YES];
         self._timerInited = NO;
-        [window setDelegate:self];
+        
     }
     return self;
 }
@@ -51,12 +51,8 @@
     if (fire && self._timerInited) [self._timer fire];
 }
 
-- (void)windowDidBecomeKey:(NSNotification *)notification{
-     NSLog(@"！！！！！！！！！！！windowDidBecomeKey");
-}
-
 - (void)windowDidBecomeMain:(NSNotification *)notification{
-    NSLog(@"！！！！！！！！！！！windowDidBecomeMain");
+    [self doCheckStatus];
 }
 
 - (void)awakeFromNib
@@ -94,6 +90,7 @@
         }
     }
     
+    [self.window setDelegate:self];
 }
 
 - (void)setAccountUI:(BOOL)hide{
