@@ -26,6 +26,7 @@
         self._timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self
                                                      selector:@selector(checkStatus:) userInfo:nil repeats:YES];
         self._timerInited = NO;
+        [window setDelegate:self];
     }
     return self;
 }
@@ -48,6 +49,14 @@
         self._timerInited = YES;
     }
     if (fire && self._timerInited) [self._timer fire];
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification{
+     NSLog(@"！！！！！！！！！！！windowDidBecomeKey");
+}
+
+- (void)windowDidBecomeMain:(NSNotification *)notification{
+    NSLog(@"！！！！！！！！！！！windowDidBecomeMain");
 }
 
 - (void)awakeFromNib

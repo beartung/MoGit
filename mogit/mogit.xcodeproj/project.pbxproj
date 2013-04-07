@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0936CF5E170AC2D30043C83A /* ShellTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0995D4EF170ABC57004B2A70 /* ShellTask.m */; };
-		09469635170DC2BC00A3212B /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 09469634170DC2BC00A3212B /* icon.iconset */; };
 		095ABA3F170D9BA600205FA7 /* code-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 095ABA3E170D9BA600205FA7 /* code-logo.png */; };
 		0995D4F2170ABCBA004B2A70 /* DBGit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0995D4F1170ABCBA004B2A70 /* DBGit.m */; };
 		09C107AD170A7945009632B5 /* DBWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C107AC170A7945009632B5 /* DBWindowController.m */; };
@@ -23,7 +22,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		09469634170DC2BC00A3212B /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
 		095ABA3E170D9BA600205FA7 /* code-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "code-logo.png"; path = "../code-logo.png"; sourceTree = "<group>"; };
 		0995D4EE170ABC56004B2A70 /* ShellTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShellTask.h; sourceTree = "<group>"; };
 		0995D4EF170ABC57004B2A70 /* ShellTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShellTask.m; sourceTree = "<group>"; };
@@ -33,7 +31,7 @@
 		09C107AC170A7945009632B5 /* DBWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBWindowController.m; sourceTree = "<group>"; };
 		09C107AF170A8EC4009632B5 /* DBConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBConfig.h; sourceTree = "<group>"; };
 		09C107B0170A8EC4009632B5 /* DBConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBConfig.m; sourceTree = "<group>"; };
-		09CE843A17112C2800988F36 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		09CE843A17112C2800988F36 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = ../icon.icns; sourceTree = "<group>"; };
 		09EF22D3170A679C00503DA1 /* mogit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mogit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09EF22D7170A679C00503DA1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		09EF22DA170A679C00503DA1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -64,7 +62,6 @@
 		09EF22C8170A679C00503DA1 = {
 			isa = PBXGroup;
 			children = (
-				09CE843A17112C2800988F36 /* icon.icns */,
 				09EF22DD170A679C00503DA1 /* mogit */,
 				09EF22D6170A679C00503DA1 /* Frameworks */,
 				09EF22D4170A679C00503DA1 /* Products */,
@@ -120,7 +117,7 @@
 		09EF22DE170A679D00503DA1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				09469634170DC2BC00A3212B /* icon.iconset */,
+				09CE843A17112C2800988F36 /* icon.icns */,
 				095ABA3E170D9BA600205FA7 /* code-logo.png */,
 				09EF22DF170A679D00503DA1 /* mogit-Info.plist */,
 				09EF22E0170A679D00503DA1 /* InfoPlist.strings */,
@@ -187,7 +184,6 @@
 				09EF22E8170A679D00503DA1 /* Credits.rtf in Resources */,
 				09EF22EE170A679D00503DA1 /* MainMenu.xib in Resources */,
 				095ABA3F170D9BA600205FA7 /* code-logo.png in Resources */,
-				09469635170DC2BC00A3212B /* icon.iconset in Resources */,
 				09CE843B17112C2800988F36 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

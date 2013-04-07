@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface DBWindowController : NSWindowController
+@interface DBWindowController : NSWindowController<NSWindowDelegate>{}
 
 @property IBOutlet NSTextFieldCell * project;
 @property IBOutlet NSTextField * projectInput;
