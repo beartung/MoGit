@@ -1,4 +1,6 @@
-Mobile git tool ^O^
+Mobile Git Toy ^O^
+
+** This only for the git user who hates command lines! If u are serious, got a real git client.
 
   1. Install git
   
