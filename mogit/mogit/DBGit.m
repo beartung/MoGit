@@ -176,14 +176,32 @@ static DBGit * __instance;
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"checkGit ret=%@", ret);
     NSRange range = [ret rangeOfString:@"git"];
-    return range.length > 0;
+    if (range.length > 0) return YES;
+
+    cmd = @"ls /usr/local/git/bin/git";
+    NSLog(@"checkGit cmd=%@", cmd);
+    ret = [ShellTask executeShellCommandSynchronously:cmd];
+    NSLog(@"checkGit ret=%@", ret);
+    range = [ret rangeOfString:@"No such file or directory"];
+    if (range.length == 0) return YES;
+    
+    cmd = @"ls /usr/bin/git";
+    NSLog(@"checkGit cmd=%@", cmd);
+    ret = [ShellTask executeShellCommandSynchronously:cmd];
+    NSLog(@"checkGit ret=%@", ret);
+    range = [ret rangeOfString:@"No such file or directory"];
+    if (range.length == 0) return YES;    
+    return NO;
+    
 }
 
 + (BOOL)checkGitConfig{
     NSString * cmd = [[NSString alloc] initWithFormat:@"grep \"%@\" ~/.netrc", kHOST];
     NSLog(@"checkGitConfig cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
-    NSLog(@"checkGitConfig ret=%@", ret);
+    if ([ret length] > 35){
+        NSLog(@"checkGitConfig ret=%@", [ret substringToIndex:35]);
+    }
     NSRange range = [ret rangeOfString:kHOST];
     return range.length > 0;
 }
