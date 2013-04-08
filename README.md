@@ -1,12 +1,19 @@
 mobile git tool ^O^
 
   1. download dmg
-  ![Mogit dmg download][0]
+
+  [Mogit dmg download][0]
+
   2. drag to install
+
   ![Mogit install][1]
+
   3. open
+
   ![Mogit open][2]
+
   4. useage
+
   ![Mogit mogit][3]
 
 [0]: http://svn.douban.com/projects/shire/attachment/wiki/bear/androidDoc/design/mogit.dmg
