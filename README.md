@@ -1,25 +1,25 @@
 mobile git tool ^O^
 
-0. install git
+1. install git
 
-just install by [git-osx-install][0], for example: [git-1.8.2][1]
+just install by [git-osx-install][1], for example: [git-1.8.2][2]
 
-1. download dmg
+2. download dmg
 
-[Mogit dmg download][2]
+[Mogit dmg download][3]
 
-2. drag to install
+3. drag to install
 
-![Mogit install][3]
+![Mogit install][4]
 
-3. open
+4. open
 
-![Mogit open][4]
+![Mogit open][5]
 
-4. useage
+5. useage
 
-![Mogit mogit][5]
-
+![Mogit mogit][6]
+  
 [0]: http://svn.douban.com/projects/shire/attachment/wiki/bear/androidDoc/design/mogit.dmg
 [1]: http://c.dapps.douban.com/p/10075/o-545x640.png
 [2]: http://c.dapps.douban.com/p/10074/o-1107x656.png
