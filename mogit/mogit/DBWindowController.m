@@ -47,7 +47,8 @@
  - (void)initTimer:(BOOL)fire{
     if (!self._timerInited){
         [[NSRunLoop currentRunLoop] addTimer:self._timer forMode:@"test"];
-        self._timerInited = YES;
+        self._timerInited = YES;        
+        [self doPull];
     }
     if (fire && self._timerInited) [self._timer fire];
 }
@@ -149,6 +150,21 @@
     [self.log scrollToEndOfDocument:nil];
 }
 
+- (void)doPull{
+    [self.progress startAnimation:nil];
+    if ([DBGit checkNetwork]){
+        NSLog(@"vpn works try sync");
+        DBConfig * config = [DBConfig sharedInstance];
+        if ([config.nowProject length] > 0){
+            [self addLog:[[DBGit sharedInstance] pull]];
+        }
+    }else{
+        NSLog(@"vpn not works !!!");
+        [self addLog:@"请检查是否连接到网络和VPN!\n然后再次点击"];
+    }
+    [self.progress stopAnimation:nil];
+}
+
 - (IBAction)onClick:(id)sender
 {
     NSLog(@"onClick...");
@@ -182,17 +198,8 @@
         [self setProjectUI:self.check.state == NSOnState];
         [self doCheckStatus];
     }else if (sender == self.logo){
-        
-        [self.progressSync startAnimation:nil];
-        if ([DBGit checkNetwork]){
-            NSLog(@"vpn works try sync");
-            [self addLog:[[DBGit sharedInstance] pull]];
-        }else{
-            NSLog(@"vpn not works !!!");
-            [self addLog:@"请检查是否连接到网络和VPN!\n然后再次点击"];
-        }
-        [self.progressSync stopAnimation:nil];
-
+        NSLog(@"onClick logo");
+        [self doPull];
     }else if (sender == self.accountButton){
         NSLog(@"onClick... account");
         NSString * inputName = self.account.stringValue;
