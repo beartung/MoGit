@@ -7,7 +7,9 @@
 //
 
 #import "DBConfig.h"
+#import "ShellTask.h"
 
+static NSString * kDBPlistPath;
 static NSString * const kDBPlistName = @"mogit.plist";
 static NSString * const kWORKDIR = @"WORK_DIR";
 static NSString * const kDefaultWorkDir = @"~/Desktop/Mogit";
@@ -28,14 +30,24 @@ static DBConfig * __instance;
     //NSLog(@"sync config now project=%@", self.nowProject);
     NSDictionary * _dict = @{kWORKDIR:self.workDir, kNOW_PROJECT:self.nowProject, kPROJECTS:self.projectGits};
     NSLog(@"sync config=%@", _dict);
-    [_dict writeToFile:kDBPlistName atomically:YES];
+    [_dict writeToFile:kDBPlistPath atomically:YES];
 }
 
 + (DBConfig *)sharedInstance {
-    NSLog(@"get config from %@", kDBPlistName);
     if (__instance == nil) {
+        NSLog(@"get config from %@", kDBPlistName);
+        NSString * dir = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES)[0];
+        NSLog(@"get suppor dir %@", dir);
+        NSString * bundle = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+        NSLog(@"get bundle %@", bundle);
+        NSString * cmd = [[NSString alloc] initWithFormat:@"mkdir -p %@/%@", dir, bundle];
+        NSLog(@"mkdir config dir cmd=%@", cmd);
+        NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
+        NSLog(@"mkdir config ret=%@", ret);
+        kDBPlistPath = [[NSString alloc] initWithFormat:@"%@/%@/%@", dir, bundle, kDBPlistName];
+        
         __instance = [[super allocWithZone:NULL] init];
-        NSDictionary * _dict = [NSDictionary dictionaryWithContentsOfFile:kDBPlistName];
+        NSDictionary * _dict = [NSDictionary dictionaryWithContentsOfFile:kDBPlistPath];
         if (_dict == nil){
             _dict = @{kWORKDIR:kDefaultWorkDir, kNOW_PROJECT:@"", kPROJECTS:@[]};
             [_dict writeToFile:kDBPlistName atomically:YES];
