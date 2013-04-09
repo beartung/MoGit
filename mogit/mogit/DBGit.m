@@ -83,7 +83,7 @@ static DBGit * __instance;
     NSLog(@"gitConfig cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"gitConfig ret=%@", ret);
-    cmd = [[NSString alloc] initWithFormat:@"cp ~/.gitconfig ~/.gitconfig.back; %@ config --global user.name %@; %@ config --global user.email %@@douban.com", kGIT, name, kGIT, name];
+    cmd = [[NSString alloc] initWithFormat:@"cp ~/.gitconfig ~/.gitconfig.back; %@ config --global user.name %@; %@ config --global user.email %@@douban.com;%@ config --global push.default matching", kGIT, name, kGIT, name, kGIT];
     NSLog(@"gitConfig cmd=%@", cmd);
     ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"gitConfig ret=%@", ret);
@@ -167,8 +167,8 @@ static DBGit * __instance;
 
 - (NSString *)sync:(NSString*)comment{
     NSString * name = [self name];
-    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ add -A; git commit -m \"%@\"; %@ pull; %@ push",
-                      [DBConfig sharedInstance].workDir, name, kGIT, comment, kGIT, kGIT];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ add -A; %@ commit -m \"%@\"; %@ pull; %@ push",
+                      [DBConfig sharedInstance].workDir, name, kGIT, kGIT, comment, kGIT, kGIT];
     NSLog(@"syncProject cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"syncProject ret=%@", ret);
