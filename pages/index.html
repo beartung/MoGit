@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>DoubanCode Git Toy</title>
+<title>MoGIT</title>
 <link rel="shortcut icon" href="img/favicon.ico">
 <style>
 html,body{
@@ -85,34 +85,25 @@ h3 span{
 	font-size: 32px;
 }
 
+ol li{
+	margin-bottom: 10px;
+}
+
+ol li ul li{
+	margin: 0;
+}
+
+h4,p{
+	margin: 0 0 5px;
+}
+
 .mod{
 	margin: 40px 0 80px;
 }
 
-.btn{
-	display: inline-block;
-	padding: 6px 16px;
-	line-height: 20px;
-	color: #fff;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-	background: #63b6ae;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	display: inline-block;
-}
-
-a.btn:hover{
-	color: #fff;
-	text-decoration: none;
-	background-color: #4ea79e;
-}
-
-mod img{
+.mod img{
 	display: block;
-	margin: 10px auto;
+	margin: 10px auto 20px;
 	width: 500px;
 }
 
@@ -128,21 +119,26 @@ img.logo{
 <div class="wrapper">
 <div class="container">
 	<a href="http://code.dapps.douban.com/bear/mogit/raw/master/release/dmg/mogit.dmg"><img class="logo" src="img/mogit-logo.png"></a>
-	<h1>DoubanCode Git Toy</h1>
+	<h1>MoGIT</h1>
 	<p>
-		MoGIT项目是面向非开发人员的简化版 <a href="http://code.dapps.douban.com/">CODE</a> 同步客户端。
-		<a class="btn" href="http://code.dapps.douban.com/bear/mogit/raw/master/release/dmg/mogit.dmg">立即下载</a></p>
+		协助设计师同步项目图片的简化版 <a href="http://code.dapps.douban.com/">CODE</a> 客户端。
+	</p>
 	<div class="mod">
 		<h3><span>1.</span>安装本地环境</h3>
-		<p>
-			下载最新的Git for Mac <a href="http://c.dapps.douban.com/z/10089/o.zip">本地下载</a> | <a href="https://code.google.com/p/git-osx-installer/">官网</a>
+		<ol>
+			<li>
+				下载并安装 Git for Mac <a href="http://c.dapps.douban.com/z/10089/o.zip">本地下载</a> | <a href="https://code.google.com/p/git-osx-installer/">官网</a> (这货装完后什么都不会发生)。
+			</li>
+			<li>
+				下载 <a href="http://code.dapps.douban.com/bear/mogit/raw/master/release/dmg/mogit.dmg">MoGIT</a>，按照提示安装好后看第二步。
+			</li>
 		</p>
 	</div>
 	<div class="mod">
-		<h3><span>2.</span>设置MoGIT</h3>
+		<h3><span>2.</span>打开MoGIT</h3>
 		<ol>
 			<li>
-				按照提示输入你的LDAP帐号密码，点击设定。<a href="http://sysadmin.douban.com/ldap/">忘记了？</a><br>
+				按照提示输入你的内网帐号密码，点击设定。<a href="http://sysadmin.douban.com/ldap/">忘记了？</a><br>
 				<img src="img/1.png"/>
 			</li>
 			<li>
@@ -150,11 +146,11 @@ img.logo{
 				<img src="img/2.png"/>
 			</li>
 			<li>
-				恭喜你！快去桌面的Mogit目录找你的项目开始添砖加瓦吧！
+				恭喜你配置完成！快去桌面的Mogit目录里，用你喜欢的方式添加文件吧！
 				<img src="img/3.png"/>
 			</li>
 			<li>
-				MoGIT中会显示你所做的改动，在红框位置输入本次提交的理由（必填)，点击同步之后就可以去项目主页看到了。
+				本地文件夹的图片添加完毕，在红框位置输入本次提交的理由（必填)，点击「同步」之后就可以提交到项目里了。
 				<img src="img/4.png"/>
 			</li>
 		</ol>
@@ -165,6 +161,31 @@ img.logo{
 			<li>如需更换项目，点击「锁」。</li>
 			<li>如需更新本地内容，点击logo「袋鼠」。</li>
 			<li>使用过程中如果遇到了任何诡异的问题，请联系<a href="http://me.dapps.douban.com/card/bear/">@bear</a>或<a href="http://me.dapps.douban.com/card/whshang/">@whshang</a>。</li>
+		</ol>
+	</div>
+	<div class="mod">
+		<h3>Q & A</h3>
+		<ol>
+			<li>
+				<h4>为什么不是直接通过skype传文件给工程师？</h4>
+				<p>除非你和工程师都是单枪匹马，共享的文件用两只手能数的清楚，多人协作或涉及到大量文件更新，这都不是一个好的解决方案。</p>
+			</li>
+			<li>
+				<h4>为什么是Git而不是dropbox？</h4>
+				<ul>
+					<li>内网提交速度更快</li>
+					<li>多人共同修改同一份文件时不会被覆盖，随时可以恢复到一个以前版本</li>
+					<li>云端存储，可以很方便的在线查看和检索</li>
+					<li>与工程师协作更直接</li>
+				</ul>
+			</li>
+			<li>
+				<h4>本工具适用的项目类型</h4>
+				<ul>
+					<li>移动（尤其是Android）项目，需要大量素材文件</li>
+					<li>设计师需要手动修改html/css</li>
+				</ul>
+			</li>
 		</ol>
 	</div>
 	<div class="mod">
