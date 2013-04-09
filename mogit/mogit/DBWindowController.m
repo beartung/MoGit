@@ -61,22 +61,11 @@
 {
     [super awakeFromNib];
     
-    NSLog(@"awakeFromNib...");
-    
-    
-    DBConfig * config = [DBConfig sharedInstance];
-    BOOL isNowProjectAvail = config.projectGits != nil &&
-            config.nowProject != nil && [config.nowProject length] > 0;
-    if (isNowProjectAvail){
-        [self.project setTitle:config.nowProject];
-        DBGit * dg = [DBGit sharedInstance];
-        dg.git = config.nowProject;
-    }
-    [self setProjectUI:!isNowProjectAvail];
+    NSLog(@"awakeFromNib...");    
     [self.log setEditable:NO];
     [self setSyncUI:YES];
     
-    NSLog(@"check git %d", [DBGit checkGit]);
+    NSLog(@"check git...");
     if (![DBGit checkGit]){
         [self setProjectUI:NO];
         [self.check setEnabled:NO];
@@ -88,6 +77,15 @@
         if (!configed){
             [self addLog:@"请先配置好GIT帐号，也可以联系合作的工程师!!"];
         }else{
+            DBConfig * config = [DBConfig sharedInstance];
+            BOOL isNowProjectAvail = config.projectGits != nil &&
+            config.nowProject != nil && [config.nowProject length] > 0;
+            if (isNowProjectAvail){
+                [self.project setTitle:config.nowProject];
+                DBGit * dg = [DBGit sharedInstance];
+                dg.git = config.nowProject;
+            }
+            [self setProjectUI:!isNowProjectAvail];
             [self initTimer:YES];
         }
     }

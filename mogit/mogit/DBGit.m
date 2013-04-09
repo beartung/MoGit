@@ -41,6 +41,10 @@ static NSString * const kERROR_NOT_COMMITER_CN = @"提交失败，请联系和�
 static NSString * const kERROR_FAIL_MERGE = @"Failed to merge";
 static NSString * const kERROR_FAIL_MERGE_CN = @"你的修改提交到远端时发生冲突，请联系和你合作的工程师帮助解决";
 static NSString * const kPUSH_SUCCESS = @"已经成功将你的修改提交到远端 ：）";
+static NSString * const kGIT_LOCAL = @"/usr/local/git/bin/git";
+static NSString * const kGIT_ALT = @"/usr/bin/git";
+
+static NSString * kGIT = @"git";
 
 @interface DBGit()
 
@@ -76,14 +80,18 @@ static DBGit * __instance;
 
 - (void)config:(NSString *)name withPassword:(NSString *)password{
     NSString * cmd = [[NSString alloc] initWithFormat:@"cp ~/.netrc ~/.netrc.bak; echo \"machine %@ login %@ password %@\" >> ~/.netrc", kHOST, name, password];
-    NSLog(@"checkGitConfig cmd=%@", cmd);
+    NSLog(@"gitConfig cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
-    NSLog(@"checkGitConfig ret=%@", ret);
+    NSLog(@"gitConfig ret=%@", ret);
+    cmd = [[NSString alloc] initWithFormat:@"cp ~/.gitconfig ~/.gitconfig.back; %@ config --global user.name %@; %@ config --global user.email %@@douban.com", kGIT, name, kGIT, name];
+    NSLog(@"gitConfig cmd=%@", cmd);
+    ret = [ShellTask executeShellCommandSynchronously:cmd];
+    NSLog(@"gitConfig ret=%@", ret);
 }
 
 - (NSString *)clone{
     NSString * workdir = [DBConfig sharedInstance].workDir;
-    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@; git clone %@", workdir, self.git];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@; %@ clone %@", workdir, kGIT, self.git];
     NSLog(@"initProject cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"initProject ret=%@", ret);
@@ -100,7 +108,7 @@ static DBGit * __instance;
     NSString * ret;
     NSRange range;
     
-    cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git status|grep \"Your branch is ahead of\"", [DBConfig sharedInstance].workDir, name];
+    cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ status|grep \"Your branch is ahead of\"", [DBConfig sharedInstance].workDir, name, kGIT];
     NSLog(@"statusProject cmd=%@", cmd);
     ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"statusProject ret=%@", ret);
@@ -116,7 +124,7 @@ static DBGit * __instance;
                                                      withString:@""];
     }
     
-    cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git status|grep -v \"no changes added to commit\"|grep -v \"nothing added to commit\";", [DBConfig sharedInstance].workDir, name];
+    cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ status|grep -v \"no changes added to commit\"|grep -v \"nothing added to commit\";", [DBConfig sharedInstance].workDir, name, kGIT];
     NSLog(@"statusProject cmd=%@", cmd);
     ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"statusProject ret=%@", ret);
@@ -133,7 +141,7 @@ static DBGit * __instance;
                             withString:kSTATUS_NEW_CN];
     }
     
-    cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git status|grep \"ed:\";", [DBConfig sharedInstance].workDir, name];
+    cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ status|grep \"ed:\";", [DBConfig sharedInstance].workDir, name, kGIT];
     NSLog(@"statusProject cmd=%@", cmd);
     NSString * changes = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"statusProject ret=%@", changes);
@@ -149,8 +157,8 @@ static DBGit * __instance;
 
 - (NSString *)pull{
     NSString * name = [self name];
-    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git pull",
-                      [DBConfig sharedInstance].workDir, name];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ pull",
+                      [DBConfig sharedInstance].workDir, name, kGIT];
     NSLog(@"syncProject cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"syncProject ret=%@", ret);
@@ -159,8 +167,8 @@ static DBGit * __instance;
 
 - (NSString *)sync:(NSString*)comment{
     NSString * name = [self name];
-    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; git add -A; git commit -m \"%@\"; git pull; git push",
-                      [DBConfig sharedInstance].workDir, name, comment];
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ add -A; git commit -m \"%@\"; %@ pull; %@ push",
+                      [DBConfig sharedInstance].workDir, name, kGIT, comment, kGIT, kGIT];
     NSLog(@"syncProject cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"syncProject ret=%@", ret);
@@ -176,6 +184,7 @@ static DBGit * __instance;
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"checkGit ret=%@", ret);
     NSRange range = [ret rangeOfString:@"git"];
+    NSLog(@"checkGit kGIT=%@", kGIT);
     if (range.length > 0) return YES;
 
     cmd = @"ls /usr/local/git/bin/git";
@@ -183,14 +192,22 @@ static DBGit * __instance;
     ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"checkGit ret=%@", ret);
     range = [ret rangeOfString:@"No such file or directory"];
-    if (range.length == 0) return YES;
+    if (range.length == 0) {
+        NSLog(@"checkGit kGIT=%@", kGIT);
+        kGIT = kGIT_LOCAL;
+        return YES;
+    }
     
     cmd = @"ls /usr/bin/git";
     NSLog(@"checkGit cmd=%@", cmd);
     ret = [ShellTask executeShellCommandSynchronously:cmd];
     NSLog(@"checkGit ret=%@", ret);
     range = [ret rangeOfString:@"No such file or directory"];
-    if (range.length == 0) return YES;    
+    if (range.length == 0) {
+        NSLog(@"checkGit kGIT=%@", kGIT);
+        kGIT = kGIT_ALT;
+        return YES;
+    }
     return NO;
     
 }
@@ -217,7 +234,7 @@ static DBGit * __instance;
 }
 
 + (NSString *)initWorkDir:(NSString *)dir{
-        NSString * cmd = [[NSString alloc] initWithFormat:@"date; mkdir -p %@", dir];
+        NSString * cmd = [[NSString alloc] initWithFormat:@"mkdir -p %@", dir];
         NSLog(@"initWorkDir cmd=%@", cmd);
         NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
         NSLog(@"initWorkDir ret=%@", ret);
