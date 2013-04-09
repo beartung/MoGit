@@ -40,11 +40,12 @@ static DBConfig * __instance;
         NSLog(@"get suppor dir %@", dir);
         NSString * bundle = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
         NSLog(@"get bundle %@", bundle);
-        NSString * cmd = [[NSString alloc] initWithFormat:@"mkdir -p %@/%@", dir, bundle];
+        NSString * cmd = [[NSString alloc] initWithFormat:@"mkdir -p \"%@/%@\"", dir, bundle];
         NSLog(@"mkdir config dir cmd=%@", cmd);
         NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
         NSLog(@"mkdir config ret=%@", ret);
         kDBPlistPath = [[NSString alloc] initWithFormat:@"%@/%@/%@", dir, bundle, kDBPlistName];
+        NSLog(@"config path=%@", kDBPlistPath);
         
         __instance = [[super allocWithZone:NULL] init];
         NSDictionary * _dict = [NSDictionary dictionaryWithContentsOfFile:kDBPlistPath];

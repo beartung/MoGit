@@ -32,7 +32,7 @@
     
 [1]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/clown.jpg
 [2]: http://c.dapps.douban.com/z/10089/o.zip
-[3]: http://c.dapps.douban.com/z/10090/o.zip
+[3]: http://c.dapps.douban.com/z/10092/o.zip
 [4]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/install.png
 [5]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/apps.png
 [6]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/mogit.png
