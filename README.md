@@ -28,7 +28,7 @@
   4. 回到Mogit，填提交信息，点同步按钮
   5. 有任何诡异的情况，联系@bear或@whshang
 
-**Come on, soldier!**
+#**Come on, soldier!**
     
 [1]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/clown.jpg
 [2]: ftp://douban:doubanpeapt@ftp.intra.douban.com/swap/git-1.8.2-intel-universal-snow-leopard.dmg
