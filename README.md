@@ -31,8 +31,8 @@
 #**Come on, soldier!**
     
 [1]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/clown.jpg
-[2]: ftp://douban:doubanpeapt@ftp.intra.douban.com/swap/git-1.8.2-intel-universal-snow-leopard.dmg
-[3]: http://code.dapps.douban.com/bear/mogit/raw/master/release/dmg/mogit.dmg
+[2]: http://c.dapps.douban.com/z/10089/o.zip
+[3]: http://c.dapps.douban.com/z/10090/o.zip
 [4]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/install.png
 [5]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/apps.png
 [6]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/mogit.png
