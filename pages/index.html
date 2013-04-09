@@ -5,6 +5,9 @@
 <title>DoubanCode Git Toy</title>
 <link rel="shortcut icon" href="img/favicon.ico">
 <style>
+html,body{
+	height: 100%;
+}
 body {
 	font: normal normal 16px/28px CrimsonTextWeb, Georgia, serif;
 	margin: 0;
@@ -29,6 +32,17 @@ a, a:link, a:hover, a:active {
 -ms-transition: all .2s ease-out;
 transition: all .2s ease-out;
 -webkit-backface-visibility: hidden;
+}
+
+.wrapper{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -60px;
+}
+.wrapper-footer,
+.footer{
+	height: 60px;
 }
 
 .footer{
@@ -111,6 +125,7 @@ img.logo{
 </style>
 </head>
 <body>
+<div class="wrapper">
 <div class="container">
 	<a href="http://code.dapps.douban.com/bear/mogit/raw/master/release/dmg/mogit.dmg"><img class="logo" src="img/mogit-logo.png"></a>
 	<h1>DoubanCode Git Toy</h1>
@@ -156,6 +171,8 @@ img.logo{
 		<h3>One More Thing</h3>
 		<p>MoGIT只是协同开发第一步，完整体验GIT需要命令行或<a href="http://git-scm.com/downloads/guis">其他更强大的GIT工具</a>。</p>
 	</div>
+</div>
+<div class="wrapper-footer"></div>
 </div>
 <div class="footer">
 	<div class="container">
