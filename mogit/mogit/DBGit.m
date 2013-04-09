@@ -35,12 +35,12 @@ static NSString * const kSTATUS_MODIFY_CN = @"修改了:\t";
 static NSString * const kNEED_PUSH = @"Your branch is ahead of";
 static NSString * const kSTATUS_DELETE = @"#	deleted:    ";
 static NSString * const kSTATUS_DELETE_CN = @"删除了:\t";
-static NSString * const kPULL_SUCCESS = @"同步%@项目最新修改到本地";
+static NSString * const kPULL_SUCCESS = @"你真棒！已经同步%@项目最新修改到本地";
 static NSString * const kERROR_NOT_COMMITER = @"fatal: could not read Username";
 static NSString * const kERROR_NOT_COMMITER_CN = @"提交失败，请联系和你合作的工程师，检查GIT帐号配置!!\n并且把你加为当前项目的commiter!!";
 static NSString * const kERROR_FAIL_MERGE = @"Failed to merge";
 static NSString * const kERROR_FAIL_MERGE_CN = @"你的修改提交到远端时发生冲突，请联系和你合作的工程师帮助解决";
-static NSString * const kPUSH_SUCCESS = @"已经成功将你的修改提交到远端 ：）";
+static NSString * const kPUSH_SUCCESS = @"你真棒！ 已经成功将你的修改提交到远端 ：）";
 static NSString * const kGIT_LOCAL = @"/usr/local/git/bin/git";
 static NSString * const kGIT_ALT = @"/usr/bin/git";
 

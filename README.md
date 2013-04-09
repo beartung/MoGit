@@ -33,7 +33,7 @@
 [1]: http://code.dapps.douban.com/bear/mogit#readme
 [2]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/clown.jpg
 [3]: http://c.dapps.douban.com/z/10089/o.zip
-[4]: http://c.dapps.douban.com/z/10096/o.zip
+[4]: http://code.dapps.douban.com/bear/mogit/raw/master/release/dmg/mogit.dmg
 [5]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/install.png
 [6]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/apps.png
 [7]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/mogit.png

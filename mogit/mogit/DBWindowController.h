@@ -26,6 +26,7 @@
 @property IBOutlet NSTextField * passwordInput;
 @property IBOutlet NSTextFieldCell * password;
 @property IBOutlet NSButton * accountButton;
+@property IBOutlet NSButton * logo;
 
 - (IBAction)onClick:(id)sender;
 
