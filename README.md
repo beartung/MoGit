@@ -1,39 +1,14 @@
-#[Mobile Git Toy ^O^][1]
+![MoGit icon](http://code.dapps.douban.com/whshang/mogit/docs/pages/img/mogit-logo.png)
 
-##**注意：这个是为git初学者/设计师开发的玩具，如果你是认真的话，去搞个真正的git客户端或者使用命令行**
+## MoGit
 
-![Are u serious?][2]
+一个帮助设计师将资源文件提交到内网CODE系统的图形化工具. [查看使用教程](http://code.dapps.douban.com/whshang/mogit/docs/pages/index.html)
 
-##下载安装git: [请猛击这里下载][3]
-  
-##下载Mogit: [请轻击这里下载][4]
-  
-##像下图一样把那只袋鼠拖到下面的蓝色文件夹里
-  
-  ![Mogit install][5]
- 
-##在应用列表里找到袋鼠，单击它
-  
-  ![Mogit open][6]
-  
-##联系@bear或者@whshang教你怎么使用  ╮(╯▽╰)╭
-  
-  ![Mogit mogit][7]
+### Features
+* 自动配置本地环境
+* 窗口切换时即可看到当前目录内变化
+* 一键同步，免去pull/push/commit烦扰 
 
-##p.s. 如果你内心足够强大，也可以自己试着用用看：
-
-  1. 设置LDAP（内网）帐号
-  2. 填项目code地址
-  3. 在对应文件夹里用你最熟悉的方式折腾
-  4. 回到Mogit，填提交信息，点同步按钮
-  5. 有任何诡异的情况，联系@bear或@whshang
-
-#**Come on, soldier!**
-    
-[1]: http://code.dapps.douban.com/bear/mogit#readme
-[2]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/clown.jpg
-[3]: http://c.dapps.douban.com/z/10089/o.zip
-[4]: http://code.dapps.douban.com/bear/mogit/raw/master/release/dmg/mogit.dmg
-[5]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/install.png
-[6]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/apps.png
-[7]: http://code.dapps.douban.com/bear/mogit/raw/master/release/screenshots/mogit.png
+### Plan
+当设计师不满足于当前工具（比如不能做代码diff）时应采用更专业的Git工具，所以，没有更多开发计划。
+使用中遇到问题请联系 [bear](http://me.dapps.douban.com/card/bear/)
