@@ -167,7 +167,7 @@ static DBGit * __instance;
 
 - (NSString *)sync:(NSString*)comment{
     NSString * name = [self name];
-    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ add -A; %@ commit -m \"%@\"; %@ pull; %@ push",
+    NSString * cmd = [[NSString alloc] initWithFormat:@"cd %@/%@; %@ add -A; %@ commit -m \"%@\"; %@ pull; %@ push origin master",
                       [DBConfig sharedInstance].workDir, name, kGIT, kGIT, comment, kGIT, kGIT];
     NSLog(@"syncProject cmd=%@", cmd);
     NSString * ret = [ShellTask executeShellCommandSynchronously:cmd];
