@@ -24,7 +24,7 @@ Mobile Git Toy ^O^
     
 [1]: https://code.google.com/p/git-osx-installer/downloads/list
 [2]: https://code.google.com/p/git-osx-installer/downloads/detail?name=git-1.8.2-intel-universal-snow-leopard.dmg&can=2&q=
-[3]: https://github.com/beartung/MoGit/blob/master/mogit.dmg
-[4]: https://github.com/beartung/MoGit/blob/master/screenshots/install.png
-[5]: https://github.com/beartung/MoGit/blob/master/screenshots/apps.png
-[6]: https://github.com/beartung/MoGit/blob/master/screenshots/mogit.png
+[3]: https://github.com/beartung/MoGit/blob/master/mogit.dmg?raw=true
+[4]: https://github.com/beartung/MoGit/blob/master/screenshots/install.png?raw=true
+[5]: https://github.com/beartung/MoGit/blob/master/screenshots/apps.png?raw=true
+[6]: https://github.com/beartung/MoGit/blob/master/screenshots/mogit.png?raw=true
